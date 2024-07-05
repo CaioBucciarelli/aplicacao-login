@@ -121,6 +121,10 @@ div.single-input-redefinir:nth-child(2) {
   width: 100%;
 }
 
+.btn{
+  width: 30%;
+}
+
 @media (max-width: 1000px) {
   .section-redefinir-conteudo h1 {
     font-size: 40px;

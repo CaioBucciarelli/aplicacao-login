@@ -81,7 +81,17 @@ function Login() {
             <img src={BoxImportant} alt="Exclamação vermelha" />
             <p>Usuário ou senha incorretos!</p>
           </div>
-          <button type='submit' className='btn' id="btn" onClick={handleSubmit} disabled={loading === true || !validadorInput()}>Entrar</button>
+                <button 
+        type='submit' 
+        className='btn' 
+        id="btn" 
+        onClick={handleSubmit} 
+        disabled={loading === true || !validadorInput()} 
+        style={{ width: '80%' }}
+      >
+        Entrar
+      </button>
+
         </form>
         <Link to="/recuperar">Esqueci minha senha</Link>
         <p>Ao efetuar login, declaro estar de acordo com a <span>Política de Privacidade</span> e o <span>Termo de Uso</span> da Plataforma</p>
