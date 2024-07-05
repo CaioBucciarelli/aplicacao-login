@@ -7,10 +7,12 @@
 }
 
 .section-redefinir-conteudo {
+  width: 80%;
+  height: 90%;
+  padding: 60px;
   background: var(--branco);
   border-radius: 100px;
   border: 1px solid var(--cinza-borda);
-  padding: 140px 440px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,9 +33,6 @@
     flex-direction: column;
     align-items: center;
   }
-  .btn-enviar {
-    width: 100%;
-  }
   .link-cancelar { 
     margin-top: 32px;
     font-size: 24px;
@@ -42,7 +41,7 @@
     color: var(--azul);
     border: 1px solid var(--azul);
     border-radius: 8px;
-    width: 70%;
+    width: 30%;
     padding: 16px 0px;
     text-align: center;
     transition: .3s;
@@ -53,25 +52,27 @@
   }
 }
 
+.infos-senha-nova ul li div {
+  background: var(--vermelho);
+}
+
 .single-input-redefinir {
   position: relative;
-  width: 80%;
+  width: 50%;
 }
 
 div.single-input-redefinir:nth-child(2) {
   margin-bottom: 120px;
 } 
 
-.section-redefinir-conteudo form .msg-erro {
-  width: 80%;
-}
-
 .infos-senha-nova, 
 .infos-senha-confirmar{
+  background: var(--branco);
+  width: 350px;
   position: absolute;
   z-index: 1;
   top: 0;
-  right: -92%;
+  right: -360px;
   display: none;
   flex-direction: column;
   text-align: left;
@@ -109,4 +110,51 @@ div.single-input-redefinir:nth-child(2) {
 .single-input-redefinir-nova-senha:focus-within .infos-senha-nova,
 .single-input-redefinir-confirmar-senha:focus-within .infos-senha-confirmar {
   display: flex;
+}
+
+.link {
+  width: 30%;
+  border-radius: 8px;
+}
+
+.link .btn {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .section-redefinir-conteudo h1 {
+    font-size: 40px;
+    margin-bottom: 0px;
+  }
+  .link,
+  .section-redefinir-conteudo .link-cancelar {
+    width: 60%;
+  }
+  .single-input-redefinir {
+    width: 80%;
+  }
+  div.single-input-redefinir:nth-child(2) {
+    margin-bottom: 60px;
+  }
+  .infos-senha-nova, 
+  .infos-senha-confirmar{
+    width: 350px;
+    top: 60px;
+    right: 0px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-redefinir-conteudo h1 {
+    font-size: 30px;
+    margin-bottom: 0px;
+  }
+  .link,
+  .section-redefinir-conteudo .link-cancelar {
+    width: 80%;
+  }
+  .single-input-redefinir {
+    width: 100%;
+  }
 }

@@ -1,105 +1,233 @@
-import Logo from '../../assets/yescolorido.png'
+import imgFundo1 from '../../../public/img-fundo-1.png';
+import imgFundo2 from '../../../public/img-fundo-2.png';
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
-import {validarSenha} from '../../utils/validadores.jsx'
+// import CardSucessoRedefinir from '../../components/card-sucesso-redefinir.tsx'
 import './styles.css';
 
-function Login() {
-
-  const [loading, setLoading] = useState()
+function Redefinir() {
   const [form, setForm] = useState([])
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const closeCard = () => {
-    let sucessoCard = document.querySelector('.login-sucesso')
-    sucessoCard.style.display = "none"
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({...form, [event.target.name]: event.target.value});
   }
-
-  const handleSubmit = async (event) => {
-    let sucessoCard = document.querySelector('.login-sucesso')
-    let email = document.getElementById('email')
-    let emailValue = document.querySelector('#email').value
-    let senha = document.getElementById('senha')
-    let senhaValue = document.querySelector('#senha').value
-    let msgErr = document.querySelector('.msg-erro')
-
-    event.preventDefault();
-    if (emailValue == "nome.sobrene@dominio.com.br" && senhaValue == 123456789) {
-      setLoading(true)
-      sucessoCard.style.display = "flex"
-      setLoading(false)
-      email.className = "input"
-      senha.className = "input"
-      msgErr.style.display = "none"
-    }
-    else {
-      email.className = "input input-err"
-      senha.className = "input input-err"
-      msgErr.style.display = "flex"
-    }
-  }
-  const handleChange = (event) => {
-    setForm({...form, [event.target.name]: event.target.value})
-  }
-
-  const validadorInput = () => {
-    return validarSenha(form.senha)
-  }
-
   const showPasswordNew = () => {
-    var inputPassNew = document.getElementById('nova-senha')
-    var btnShowPassNew = document.getElementById('btn-nova-senha')
+    const inputPassNew = document.getElementById('nova-senha') as HTMLInputElement;
+    const btnShowPassNew = document.getElementById('btn-nova-senha');
 
-    if (inputPassNew.type === 'password') {
-      inputPassNew.setAttribute('type', 'text')
-      btnShowPassNew.classList.replace('bi-eye', 'bi-eye-slash')
-    } else {
-      inputPassNew.setAttribute('type', 'password')
-      btnShowPassNew.classList.replace('bi-eye-slash', 'bi-eye')
+    if (inputPassNew && btnShowPassNew) {
+      if (inputPassNew.type === 'password') {
+        inputPassNew.setAttribute('type', 'text');
+        btnShowPassNew.classList.replace('bi-eye', 'bi-eye-slash');
+      } else {
+        inputPassNew.setAttribute('type', 'password');
+        btnShowPassNew.classList.replace('bi-eye-slash', 'bi-eye');
+      }
     }
-  }
 
+  }
   const showPasswordConfirm = () => {
-    var inputPassConfirm = document.getElementById('confirmar-senha')
-    var btnShowPassConfirm = document.getElementById('btn-confirmar-senha')
+    const inputPassConfirm = document.getElementById('confirmar-senha') as HTMLInputElement
+    const btnShowPassConfirm = document.getElementById('btn-confirmar-senha')
 
-    if (inputPassConfirm.type === 'password') {
-      inputPassConfirm.setAttribute('type', 'text')
-      btnShowPassConfirm.classList.replace('bi-eye', 'bi-eye-slash')
-    } else {
-      inputPassConfirm.setAttribute('type', 'password')
-      btnShowPassConfirm.classList.replace('bi-eye-slash', 'bi-eye')
+    if (inputPassConfirm && btnShowPassConfirm) {
+      if (inputPassConfirm.type === 'password') {
+        inputPassConfirm.setAttribute('type', 'text')
+        btnShowPassConfirm.classList.replace('bi-eye', 'bi-eye-slash')
+      } else {
+        inputPassConfirm.setAttribute('type', 'password')
+        btnShowPassConfirm.classList.replace('bi-eye-slash', 'bi-eye')
+      }
     }
+
   }
+
+  const verificarInfos = () => {
+    const senhaNova = document.getElementById('nova-senha') as HTMLInputElement;
+    const senhaConfirmar = document.getElementById('confirmar-senha') as HTMLInputElement;
+    const listaNova = document.querySelectorAll<HTMLDivElement>('.infos-senha-nova ul li div');
+    const listaConfirmar = document.querySelectorAll<HTMLDivElement>('.infos-senha-confirmar ul li div');
+
+    const maiuscula = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const minuscula = "abcdefghijklmnopqrstuvwxyz";
+    const numeros = "0123456789";
+    const especiais = "@$%&!";
+
+    const listaMaiusculo = [];
+    const listaMinusculo = [];
+    const listaNumeros = [];
+    const listaEspeciais = [];
+    let isValid = true;;
+    
+
+
+    if (senhaNova.value === '') {
+      for ( let i = 0; i < listaNova.length; i++) {
+        listaNova[i].style.backgroundColor = 'var(--vermelho)';
+        listaConfirmar[i].style.backgroundColor = 'var(--vermelho)';
+      }
+      isValid = false;
+    } else {
+        if (senhaNova.value.length >= 8 && senhaNova.value.length <= 32) {
+          listaNova[0].style.backgroundColor = 'var(--verde)';
+          listaConfirmar[0].style.backgroundColor = 'var(--verde)';
+          isValid = true;
+        } else {
+          listaNova[0].style.backgroundColor = 'var(--vermelho)';
+          listaConfirmar[0].style.backgroundColor = 'var(--vermelho)';
+          isValid = false;
+        }
+        for ( let i = 0; i < senhaNova.value.length; i++) {
+          listaMaiusculo.push(maiuscula.indexOf(senhaNova.value.charAt(i)));
+          let letras = Math.max.apply(null, listaMaiusculo);
+          if (letras >= 0) {
+            listaNova[1].style.backgroundColor = 'var(--verde)';
+            listaConfirmar[1].style.backgroundColor = 'var(--verde)';
+            isValid = true;
+          } else {
+            listaNova[1].style.backgroundColor = 'var(--vermelho)';
+            listaConfirmar[1].style.backgroundColor = 'var(--vermelho)';
+            isValid = false;
+          }
+        }
+    
+        for ( let i = 0; i < senhaNova.value.length; i++) {
+          listaMinusculo.push(minuscula.indexOf(senhaNova.value.charAt(i)));
+          let letras = Math.max.apply(null, listaMinusculo);
+          if (letras >= 0) {
+            listaNova[2].style.backgroundColor = 'var(--verde)';
+            listaConfirmar[2].style.backgroundColor = 'var(--verde)';
+            isValid = true;
+          } else {
+            listaNova[2].style.backgroundColor = 'var(--vermelho)';
+            listaConfirmar[2].style.backgroundColor = 'var(--vermelho)';
+            isValid = false;
+          }
+        }
+    
+    
+        for (let i = 0; i < senhaNova.value.length; i++) {
+          listaNumeros.push(numeros.indexOf(senhaNova.value.charAt(i)))
+          let numero = Math.max.apply(null, listaNumeros);
+          if (numero >= 0) {
+            listaNova[3].style.backgroundColor = 'var(--verde)';
+            listaConfirmar[3].style.backgroundColor = 'var(--verde)';
+            isValid = true;
+          } else {
+            listaNova[3].style.backgroundColor = 'var(--vermelho)';
+            listaConfirmar[3].style.backgroundColor = 'var(--vermelho)';
+            isValid = false;
+          }
+        }
+        
+        for (let i = 0; i < senhaNova.value.length; i++) {
+          listaEspeciais.push(especiais.indexOf(senhaNova.value.charAt(i)));
+          let espeial = Math.max.apply(null, listaEspeciais);
+          if (espeial >= 0) {
+            listaNova[4].style.backgroundColor = 'var(--verde)';
+            listaConfirmar[4].style.backgroundColor = 'var(--verde)';
+            isValid = true;
+          } else {
+            listaNova[4].style.backgroundColor = 'var(--vermelho)';
+            listaConfirmar[4].style.backgroundColor = 'var(--vermelho)';
+            isValid = false;
+          }
+        }
+
+        if (senhaNova.value === 'nome.sobrene@dominio.com.br') {
+          listaNova[5].style.backgroundColor = 'var(--vermelho)';
+          listaConfirmar[5].style.backgroundColor = 'var(--vermelho)';
+          isValid = false;
+        } else {
+          listaNova[5].style.backgroundColor = 'var(--verde)';
+          listaConfirmar[5].style.backgroundColor = 'var(--verde)';
+          isValid = true;
+        }
+
+        if (senhaNova.value === senhaConfirmar.value) {
+          listaNova[6].style.backgroundColor = 'var(--verde)';
+          listaConfirmar[6].style.backgroundColor = 'var(--verde)';
+          isValid = true;
+        } else {
+          listaNova[6].style.backgroundColor = 'var(--vermelho)';
+          listaConfirmar[6].style.backgroundColor = 'var(--vermelho)';
+          isValid = false;
+        }
+    };
+    setIsFormValid(isValid);
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    const sucessoCardRedefinir = document.querySelector<HTMLDivElement>('.card-sucesso-redefinir');
+    let pathName = window.location.pathname;
+    event.preventDefault();
+    if (isFormValid) {
+      if (sucessoCardRedefinir) {
+        sucessoCardRedefinir.style.display = 'flex';
+      }
+      if (pathName ==='/redefinir') {
+        pathName = '/'
+      }
+    }
+  };
 
   return (
     <section className='section-redefinir container'>
       <div className='section-redefinir-conteudo'>
         <h1>Redefinição de Senha</h1>
         <form>
-          <div className='single-input-login input-senha single-input-redefinir'>
-            <div className='single-input'>
-              <input required type="password" name="senha" id="nova-senha" className='input' onChange={handleChange}/>
-              <label htmlFor="senha">Nova senha*</label>
+          <div className='single-input-redefinir single-input-redefinir-nova-senha'>
+            <div className='input-senha'>
+              <div className='single-input'>
+                <input required type="password" name="nova-senha" id="nova-senha" className='input' onChange={handleChange} onKeyUp={verificarInfos}/>
+                <label htmlFor="nova-senha">Nova senha*</label>
+              </div>
+              <i className="bi bi-eye" id='btn-nova-senha' onClick={showPasswordNew}></i>
             </div>
-            <i className="bi bi-eye" id='btn-nova-senha' onClick={showPasswordNew}></i>
-          </div>
-          <div className='single-input-login input-senha single-input-redefinir'>
-            <div className='single-input'>
-              <input required type="password" name="senha" id="confirmar-senha" className='input' onChange={handleChange}/>
-              <label htmlFor="senha">Confirmar senha*</label>
+            <div className='infos-senha-nova'>
+              <h2>Segurança da senha</h2>
+              <ul>
+                <li><div></div>Deve conter, ao menos, 8 e máximo de 32 caracteres</li>
+                <li><div></div>Deve conter, ao menos, uma letra maiúscula</li>
+                <li><div></div>Deve conter, ao menos, uma letra minúscula</li>
+                <li><div></div>Deve conter, ao menos, um número</li>
+                <li><div></div>Deve conter, ao menos, um caractere especiais</li>
+                <li><div></div>Não utilizar o seu próprio login na senha</li>
+                <li><div></div>As senhas digitadas devem ser idênticas</li>
+              </ul>
             </div>
-            <i className="bi bi-eye" id='btn-confirmar-senha' onClick={showPasswordConfirm}></i>
           </div>
-          <button type='submit' className='btn' id="btn" onClick={handleSubmit} disabled={loading === true || !validadorInput()}>Entrar</button>
+          <div className='single-input-redefinir single-input-redefinir-confirmar-senha'>
+            <div className='input-senha'>
+              <div className='single-input'>
+                <input required type="password" name="confirmar-senha" id="confirmar-senha" className='input' onChange={handleChange} onKeyUp={verificarInfos}/>
+                <label htmlFor="confirmar-senha">Nova senha*</label>
+              </div>
+              <i className="bi bi-eye" id='btn-confirmar-senha' onClick={showPasswordConfirm}></i>
+            </div>
+            <div className='infos-senha-confirmar'>
+              <h2>Segurança da senha</h2>
+              <ul>
+                <li><div></div>Deve conter, ao menos, 8 e máximo de 32 caracteres</li>
+                <li><div></div>Deve conter, ao menos, uma letra maiúscula</li>
+                <li><div></div>Deve conter, ao menos, uma letra minúscula</li>
+                <li><div></div>Deve conter, ao menos, um número</li>
+                <li><div></div>Deve conter, ao menos, um caractere especiais</li>
+                <li><div></div>Não utilizar o seu próprio login na senha</li>
+                <li><div></div>As senhas digitadas devem ser idênticas</li>
+              </ul>
+            </div>
+          </div>
+          <Link to="/" className='link'><button type='submit' className='btn' id="btn" onClick={handleSubmit} disabled={!isFormValid}>Enviar</button></Link>
         </form>
-        <Link to="/">Cancelar</Link>
+        <Link to="/" className='link-cancelar'>Cancelar</Link>
       </div>
+      {/* <CardSucessoRedefinir/> */}
+      <img src={imgFundo1} alt="imagem de fundo transparente" className='img-fundo-1' />
+      <img src={imgFundo2} alt="imagem de fundo transparente" className='img-fundo-2'/>
     </section>
-            //   <div className='msg-erro'>
-            //   <img src={BoxImportant} alt="Exclamação vermelha" />
-            //   <p>Usuário ou senha incorretos!</p>
-            // </div>
   );
 }
 
-export default Login;
+export default Redefinir;

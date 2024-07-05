@@ -26,6 +26,7 @@
   height: 100vh;
   position: relative;
   background: var(--azul);
+  overflow: hidden;
 }
 
 .container::before {
@@ -38,6 +39,23 @@
   top: calc(50% - 250px);
   background: var(--verde-claro);
   z-index: -1;
+}
+
+.container .img-fundo-1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  height: 96%;
+  z-index: -2;
+}
+
+.container .img-fundo-2 {
+  position: absolute;
+  top: -20px;
+  right: -100px;
+  width: 50%;
+  height: 100%;
+  z-index: -2;
 }
 
 div.single-input {
@@ -73,10 +91,6 @@ div.single-input .input {
   font-weight: 700;
 }
 
-.btn-enviar {
-  border-radius: 8px;
-}
-
 .btn {
   width: 100%;
   border: none;
@@ -91,16 +105,10 @@ div.single-input .input {
 }
 
 .btn:disabled {
-  width: 100%;
   background: var(--cinza-claro);
   cursor: default;
   transition: .3s;
   cursor: not-allowed;
-}
-
-.section-recuperacao-conteudo .btn,
-.section-redefinir-conteudo .btn {
-  width: 70%;
 }
 
 .bi {
@@ -116,7 +124,8 @@ div.single-input .input {
   cursor: pointer;
 }
 
-.card-sucesso {
+.card-sucesso-login,
+.card-sucesso-redefinir{
   display: none;
   align-items: center;
   justify-content: center;
@@ -131,11 +140,13 @@ div.single-input .input {
   color: var(--branco);
 }
 
-.card-sucesso img {
+.card-sucesso-login img,
+.card-sucesso-redefinir img {
   width: 40px;
 }
 
-.card-sucesso button {
+.card-sucesso-login button,
+.card-sucesso-redefinir button {
   border: none;
   background: transparent;
   position: absolute;
@@ -144,36 +155,7 @@ div.single-input .input {
   cursor: pointer;
 }
 
-.card-sucesso button img {
+.card-sucesso-login button img,
+.card-sucesso-redefinir button img {
   width: 15px;
-}
-
-.msg-erro {
-  position: absolute;
-  top: 122px;
-  display: none;
-  align-items: center;
-  gap: 8px;
-  background: var(--vermelho);
-  width: 100%;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--branco);
-  border-radius: 4px;
-  padding: 8px 20px;
-  box-shadow: -4px 4px 10px rgba(0, 0, 0, .5);
-  img {
-    width: 40px;
-  }
-  p {
-    margin: 0 !important;
-  }
-}
-
-div.single-input .input-err {
-  border: 1px solid var(--vermelho);
-}
-
-div.single-input .input-err + label {
-  color: var(--vermelho);
 }

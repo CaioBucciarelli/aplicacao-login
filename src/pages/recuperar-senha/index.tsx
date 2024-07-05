@@ -1,20 +1,23 @@
-import Logo from '../../assets/yescolorido.png'
+import Logo from '../../../public/yescolorido.png'
+import imgFundo1 from '../../../public/img-fundo-1.png';
+import imgFundo2 from '../../../public/img-fundo-2.png';
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
-import {validarEmail} from '../../utils/validadores.jsx'
+import {validarEmail} from '../../utils/validadores.tsx'
 import './styles.css';
 
 function Recuperar() {
-  const [loading, setLoading] = useState()
-  const [form, setForm] = useState([])
+  const [form, setForm] = useState({ email: ''});
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    let msg = document.querySelector('.msg-email')
-    msg.style.display = "flex"
+    const msg = document.querySelector<HTMLDivElement>('.msg-email')
+    if (msg) {
+      msg.style.display = "flex"
+    }
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm({...form, [event.target.name]: event.target.value})
   }
 
@@ -32,7 +35,7 @@ function Recuperar() {
           <label htmlFor="email">E-mail</label>
         </div>
         <p>Será enviado um e-mail para o endereço cadastrado, contendo o link de redefinição de senha</p>
-        <button type='submit' className='btn' id="btn" onClick={handleSubmit} disabled={loading === true || !validadorInput()}>Enviar</button>
+        <button type='submit' className='btn' id="btn" onClick={handleSubmit} disabled={!validadorInput()}>Enviar</button>
         <Link to="/">Cancelar</Link>
       </div>
       <div className='msg-email'>
@@ -48,6 +51,8 @@ function Recuperar() {
           <small>Você não precisa responder este e-mail, pois este é um e-mail automático</small>
         </div>
       </div>
+      <img src={imgFundo1} alt="imagem de fundo transparente" className='img-fundo-1' />
+      <img src={imgFundo2} alt="imagem de fundo transparente" className='img-fundo-2'/>
     </section>
   );
 }
